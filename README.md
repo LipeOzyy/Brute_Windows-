@@ -1,20 +1,65 @@
-# Brute_Windows-
-script de Brute Force em ambientes Windows. Esses scripts são usados para automatizar tentativas de conexão com recursos de rede no Windows, utilizando o comando net use.
+# Windows Network Share Brute Force Script
 
-## Modo de uso:
-### script:
+This script is a **Batch script for Windows** designed to test multiple username and password combinations against a target machine’s network share using the `net use` command.  
 
-1 - Crie um arquivo chamado senhas.txt no mesmo diretório do script.
+It reads credentials from a text file (`credentials.txt`) and attempts to authenticate each pair against the target IP. If valid credentials are found, the script reports success and exits immediately.
 
-2 - Substitua <ip_alvo> no script pelo endereço IP ou nome da máquina alvo que deseja testar.
+---
 
-3 - Copie o código para um arquivo de texto e salve-o com a extensão .bat ou .cmd, como por exemplo testar_senhas.bat
+## Requirements:
 
-### script simples:
-1 - Substitua <ip_alvo> pelo IP do alvo ou nome do servidor.
+- **Windows OS** (Tested on Windows 10 / 11)
+- A text file named **`credentials.txt`** with username and password pairs
+- Basic knowledge of Windows command prompt
 
-2 - Certifique-se de que o arquivo senhas.txt esteja no mesmo diretório.
+---
 
-3 - Digite o comando diretamente no Prompt de Comando (não funciona em .bat sem modificar os % para %%).
+## Credentials File Format:
 
+The file **`credentials.txt`** must contain username and password pairs separated by a space:
+```
+administrator password123
+guest guest123
+user1 P@ssw0rd!
+```
+
+
+Each line represents one combination that will be tested.
+
+---
+
+## Usage:
+
+1. Edit the script to set the target IP address:  
+
+   ```bat
+   set "target_ip=<target_ip>"
+   ```
+Replace <target_ip> with the IP address of the machine you want to test.
+
+Place your credentials.txt file in the same directory as the script.
+
+Run the script from the Command Prompt:
+```bat
+   brute_force.bat
+```
+
+## Script Output:
+If a login attempt is successful:
+```bat
+[SUCCESS] Valid credentials found: username / password
+```
+The script will immediately exit with code 0.
+
+If a login attempt fails:
+```bat
+[FAILED] Invalid credentials: username / password
+```
+If all combinations fail:
+```bat
+All combinations failed
+```
+The script will exit with code 1.
+
+   
 
